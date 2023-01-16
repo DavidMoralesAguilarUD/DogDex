@@ -2,8 +2,9 @@ package com.example.dogdex.api.responses
 
 import com.example.dogdex.Dog
 
-enum class ApiResponseStatus{
-    LOADING,
-    ERROR,
-    SUCCESS,
+sealed class ApiResponseStatus() {
+    class Success(val dogList: List<Dog>): ApiResponseStatus()
+    class Loading(): ApiResponseStatus()
+    class Error(val messageId:Int): ApiResponseStatus()
+
 }
