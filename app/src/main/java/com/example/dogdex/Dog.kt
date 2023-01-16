@@ -1,7 +1,10 @@
 package com.example.dogdex
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Dog(
     val id: Long,
     val index: Int,
@@ -15,4 +18,4 @@ data class Dog(
     val weightFemale: String,
     val weightMale: String,
 
-    )
+    ) : Parcelable

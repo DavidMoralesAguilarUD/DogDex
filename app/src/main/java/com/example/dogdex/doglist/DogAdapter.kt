@@ -19,7 +19,10 @@ class DogAdapter: ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback){
         override fun areContentsTheSame(oldItem: Dog, newItem: Dog): Boolean {
             return oldItem.id === newItem.id
     }}
-
+    private var onItemCLickListener: ((Dog) -> Unit)? = null
+    fun setOnItemClickListener(onItemClickListener: (Dog) -> Unit){
+        this.onItemCLickListener = onItemClickListener
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogViewHolder {
 
         val binding = DogListItemBinding
@@ -38,6 +41,9 @@ class DogAdapter: ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback){
         RecyclerView.ViewHolder(binding.root){
             fun bind(dog: Dog){
                 binding.dogName.text = dog.name
+                binding.dogName.setOnClickListener {
+                    onItemCLickListener?.invoke(dog)
+                }
             }
 
     }
