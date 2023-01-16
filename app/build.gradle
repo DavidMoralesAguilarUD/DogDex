@@ -54,6 +54,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:+'
     implementation 'androidx.core:core-ktx:+'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.0.0'
+    implementation 'androidx.core:core-ktx:+'
 
 
     testImplementation 'junit:junit:4.13.2'
