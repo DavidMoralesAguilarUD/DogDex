@@ -2,10 +2,12 @@ package com.example.dogdex.api
 
 import com.example.dogdex.BASE_URL
 import com.example.dogdex.GET_ALL_DOGS_URL
+import com.example.dogdex.SIGN_IN_URL
 import com.example.dogdex.SIGN_UP_URL
+import com.example.dogdex.api.dto.LoginDTO
 import com.example.dogdex.api.dto.SignUpDTO
 import com.example.dogdex.api.responses.DogListApiResponse
-import com.example.dogdex.api.responses.SignUpApiResponse
+import com.example.dogdex.api.responses.AuthApiResponse
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
@@ -21,7 +23,10 @@ interface ApiService {
     suspend fun getAllDogs(): DogListApiResponse
 
     @POST(SIGN_UP_URL)
-    suspend fun signUp(@Body signUpDTO: SignUpDTO): SignUpApiResponse
+    suspend fun signUp(@Body signUpDTO: SignUpDTO): AuthApiResponse
+
+    @POST(SIGN_IN_URL)
+    suspend fun login(@Body loginDTO: LoginDTO): AuthApiResponse
 
 }
 object DogsApi{

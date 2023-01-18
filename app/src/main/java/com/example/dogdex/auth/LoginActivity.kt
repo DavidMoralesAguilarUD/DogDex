@@ -3,16 +3,13 @@ package com.example.dogdex.auth
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Message
 import android.view.View
-import android.view.WindowId
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.findNavController
 import com.example.dogdex.MainActivity
 import com.example.dogdex.R
-import com.example.dogdex.api.responses.ApiResponseStatus
+import com.example.dogdex.api.ApiResponseStatus
 import com.example.dogdex.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions,
@@ -63,11 +60,16 @@ class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions,
         findNavController(R.id.nav_host_fragment).navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
     }
 
+    override fun onLoginFieldsValidated(email: String, password: String) {
+        viewModel.login(email, password)
+    }
+
     override fun onSignUpFieldsValidated(
         email: String,
         password: String,
         passwordConfirmation: String
     ) {
         viewModel.signUp(email, password, passwordConfirmation)
+
     }
 }

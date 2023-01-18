@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dogdex.api.responses.ApiResponseStatus
+import com.example.dogdex.api.ApiResponseStatus
 import com.example.dogdex.model.User
 import kotlinx.coroutines.launch
 
@@ -19,6 +19,13 @@ class AuthViewModel: ViewModel() {
         get() = _status
 
     private val authRepository = AuthRepository()
+    fun login(email: String, password: String) {
+        viewModelScope.launch {
+            _status.value = ApiResponseStatus.Loading()
+            handleResponseStatus(authRepository.login(email, password))
+        }
+
+    }
     fun signUp(email:String, password:String, passwordConfirmation: String){
         viewModelScope.launch {
             _status.value = ApiResponseStatus.Loading()
@@ -34,4 +41,6 @@ class AuthViewModel: ViewModel() {
         _status.value = apiResponseStatus
 
     }
+
+
 }

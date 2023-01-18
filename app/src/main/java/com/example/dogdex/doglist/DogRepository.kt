@@ -4,7 +4,7 @@ import com.example.dogdex.model.Dog
 import com.example.dogdex.api.DogsApi.retrofitService
 import com.example.dogdex.api.dto.DogDTOMapper
 import com.example.dogdex.api.makeNetworkCall
-import com.example.dogdex.api.responses.ApiResponseStatus
+import com.example.dogdex.api.ApiResponseStatus
 
 class DogRepository {
     suspend fun downloadDogs(): ApiResponseStatus<List<Dog>> = makeNetworkCall {

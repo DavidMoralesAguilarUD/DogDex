@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.dogdex.api.responses.ApiResponseStatus
+import com.example.dogdex.api.ApiResponseStatus
 import com.example.dogdex.databinding.ActivityDogListBinding
 import com.example.dogdex.dogdetail.DogDetailActivity
 import com.example.dogdex.dogdetail.DogDetailActivity.Companion.DOG_KEY

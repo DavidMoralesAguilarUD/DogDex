@@ -1,7 +1,6 @@
 package com.example.dogdex.api
 
 import com.example.dogdex.R
-import com.example.dogdex.api.responses.ApiResponseStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.UnknownHostException
