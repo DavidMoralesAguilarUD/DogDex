@@ -1,5 +1,6 @@
 package com.example.dogdex.auth
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
 import androidx.fragment.app.Fragment
@@ -10,7 +11,19 @@ import com.example.dogdex.R
 import com.example.dogdex.databinding.FragmentSignUpBinding
 
 class SignUpFragment : Fragment() {
+    interface SignUpFragmentActions {
+        fun onSignUpFieldsValidated(email: String, password: String, passwordConfirmation: String)
+    }
+    private lateinit var signUpFragmentActions: SignUpFragmentActions
 
+    override fun onAttach(context: Context){
+        super.onAttach(context)
+        signUpFragmentActions = try{
+            context as SignUpFragmentActions
+        } catch (e: ClassCastException){
+            throw ClassCastException("$context must implement LoginFragmentActions")
+        }
+    }
     private lateinit var binding: FragmentSignUpBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +68,8 @@ class SignUpFragment : Fragment() {
         if(password != passwordConfirmation){
             binding.passwordInput.error = getString(R.string.passwords_do_not_match)
         }
+
+        signUpFragmentActions.onSignUpFieldsValidated(email, password, passwordConfirmation)
 
 
     }

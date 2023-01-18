@@ -4,13 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.GridLayout
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.dogdex.Dog
-import com.example.dogdex.R
 import com.example.dogdex.api.responses.ApiResponseStatus
 import com.example.dogdex.databinding.ActivityDogListBinding
 import com.example.dogdex.dogdetail.DogDetailActivity

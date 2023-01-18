@@ -1,0 +1,10 @@
+package com.example.dogdex.api.responses
+
+import com.squareup.moshi.Json
+
+class SignUpApiResponse (
+
+    val message: String,
+    @field:Json(name = "is_success") val isSucess: Boolean,
+    val data: UserResponse,
+)
