@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dogdex.Dog
-import com.example.dogdex.api.responses.ApiResponseStatus
+import com.example.dogdex.model.Dog
+import com.example.dogdex.api.ApiResponseStatus
 import kotlinx.coroutines.launch
 
 class DogListViewModel: ViewModel() {

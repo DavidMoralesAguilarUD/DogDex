@@ -1,10 +1,8 @@
-package com.example.dogdex.api.responses
-
-import com.example.dogdex.Dog
+package com.example.dogdex.api
 
 sealed class ApiResponseStatus<T>{
     class Success<T>(val data:T): ApiResponseStatus<T>()
     class Loading<T>: ApiResponseStatus<T>()
-    class Error<T>(val messageId:Int): ApiResponseStatus<T>  ()
+    class Error<T>(val messageId:Int): ApiResponseStatus<T>()
 
 }
