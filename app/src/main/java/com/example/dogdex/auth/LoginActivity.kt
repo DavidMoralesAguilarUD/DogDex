@@ -11,6 +11,7 @@ import com.example.dogdex.MainActivity
 import com.example.dogdex.R
 import com.example.dogdex.api.ApiResponseStatus
 import com.example.dogdex.databinding.ActivityLoginBinding
+import com.example.dogdex.model.User
 
 class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions,
     SignUpFragment.SignUpFragmentActions {
@@ -35,6 +36,7 @@ class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions,
         }
         viewModel.user.observe(this) { user ->
             if (user != null) {
+                User.setLoggedInUser(this,user)
                 startMainActivity()
             }
         }
@@ -43,6 +45,7 @@ class LoginActivity : AppCompatActivity(), LoginFragment.LoginFragmentActions,
 
     private fun startMainActivity() {
         startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 
     private fun showErrorDialog(messageId: Int) {
