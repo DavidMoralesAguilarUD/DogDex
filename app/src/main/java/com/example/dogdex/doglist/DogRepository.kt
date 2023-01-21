@@ -8,14 +8,18 @@ import com.example.dogdex.api.makeNetworkCall
 import com.example.dogdex.api.ApiResponseStatus
 import com.example.dogdex.api.dto.AddDogToUserDTO
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
 class DogRepository {
 
     suspend fun getDogCollection():ApiResponseStatus<List<Dog>>{
         return withContext(Dispatchers.IO){
-            val allDogsListResponse = downloadDogs()
-            val userDogsListResponse = getUserDogs()
+            val allDogsListDeferred = async { downloadDogs()}
+            val userDogsListDeferred  = async {getUserDogs()}
+
+            val allDogsListResponse  = allDogsListDeferred.await()
+            val userDogsListResponse = userDogsListDeferred.await()
 
             if(allDogsListResponse is ApiResponseStatus.Error){
                 allDogsListResponse
