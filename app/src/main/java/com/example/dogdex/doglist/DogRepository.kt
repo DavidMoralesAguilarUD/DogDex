@@ -31,17 +31,17 @@ class DogRepository {
         }
 
     }
-    private  fun getCollectionList(allDogList :List<Dog>, userDogList: List<Dog>):List<Dog>{
-        return allDogList.map{
+    private  fun getCollectionList(allDogList :List<Dog>, userDogList: List<Dog>) =
+        allDogList.map{
             if(userDogList.contains(it)){
                 it
             }else{
                 Dog(0,it.index, "","","","","","","",
                     "", "" )
             }
-        }
+        }.sorted()
 
-    }
+
     private suspend fun downloadDogs(): ApiResponseStatus<List<Dog>> = makeNetworkCall {
         val dogListApiResponse = retrofitService.getAllDogs()
         val dogDTOList = dogListApiResponse.data.dogs
