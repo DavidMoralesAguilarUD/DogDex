@@ -1,31 +1,36 @@
 package com.example.dogdex.doglist
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.dogdex.R
 import com.example.dogdex.model.Dog
 import com.example.dogdex.databinding.DogListItemBinding
 
-class DogAdapter: ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback){
+class DogAdapter : ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback) {
 
-    companion object DiffCallback : DiffUtil.ItemCallback<Dog>(){
+    companion object DiffCallback : DiffUtil.ItemCallback<Dog>() {
         override fun areItemsTheSame(oldItem: Dog, newItem: Dog): Boolean {
             return oldItem === newItem
         }
 
         override fun areContentsTheSame(oldItem: Dog, newItem: Dog): Boolean {
             return oldItem.id === newItem.id
-    }}
+        }
+    }
+
     private var onItemCLickListener: ((Dog) -> Unit)? = null
-    fun setOnItemClickListener(onItemClickListener: (Dog) -> Unit){
+    fun setOnItemClickListener(onItemClickListener: (Dog) -> Unit) {
         this.onItemCLickListener = onItemClickListener
     }
 
     private var onLongItemCLickListener: ((Dog) -> Unit)? = null
-    fun setLongOnItemClickListener(onLongItemClickListener: (Dog) -> Unit){
+    fun setLongOnItemClickListener(onLongItemClickListener: (Dog) -> Unit) {
         this.onLongItemCLickListener = onLongItemClickListener
     }
 
@@ -44,18 +49,36 @@ class DogAdapter: ListAdapter<Dog, DogAdapter.DogViewHolder>(DiffCallback){
         dogViewHolder.bind(dog)
     }
 
-    inner class DogViewHolder(private val binding: DogListItemBinding):
-        RecyclerView.ViewHolder(binding.root){
-            fun bind(dog: Dog){
+    inner class DogViewHolder(private val binding: DogListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(dog: Dog) {
+            if (dog.inCollection) {
+                binding.dogListItemLayout.background = ContextCompat.getDrawable(
+                    binding.dogImage.context,
+                    R.drawable.dog_list_item_background
+                )
+                binding.dogImage.visibility = View.VISIBLE
+                binding.dogIndex.visibility = View.GONE
+
                 binding.dogListItemLayout.setOnClickListener {
                     onItemCLickListener?.invoke(dog)
                 }
-                binding.dogListItemLayout.setOnLongClickListener{
+
+                binding.dogImage.load(dog.imageUrl)
+            } else {
+                binding.dogImage.visibility = View.GONE
+                binding.dogIndex.visibility = View.VISIBLE
+                binding.dogIndex.text = dog.index.toString()
+                binding.dogListItemLayout.background = ContextCompat.getDrawable(
+                    binding.dogImage.context,
+                    R.drawable.dog_list_item_null_background
+                )
+                binding.dogListItemLayout.setOnLongClickListener {
                     onLongItemCLickListener?.invoke(dog)
                     true
                 }
-                binding.dogImage.load(dog.imageUrl)
             }
+        }
 
     }
 
