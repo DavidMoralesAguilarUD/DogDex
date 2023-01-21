@@ -17,5 +17,14 @@ data class Dog(
     val temperament: String,
     val weightFemale: String,
     val weightMale: String,
+    var inCollection: Boolean = true
 
-    ) : Parcelable
+    ) : Parcelable, Comparable<Dog>{
+    override fun compareTo(other: Dog): Int {
+       return if(this.index > other.index){
+           1
+       } else {
+           -1
+       }
+    }
+    }

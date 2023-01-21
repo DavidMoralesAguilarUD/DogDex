@@ -24,10 +24,11 @@ suspend fun <T> makeNetworkCall(
         }
         ApiResponseStatus.Error(errorMessage)
     } catch (e: Exception) {
-        val errorMessage = when(e.message){
+        when(e.message){
             "sign_up_error" -> R.string.error_sign_up
             "sign_in_error" -> R.string.error_sign_in
             "user_already_exists" -> R.string.user_already_exists
+            "error_adding_dog" -> R.string.error_adding_dog
             else -> R.string.unknown_error
         }
         ApiResponseStatus.Error(R.string.unknown_error)

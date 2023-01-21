@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
+import com.example.dogdex.api.ApiServiceInterceptor
 import com.example.dogdex.auth.LoginActivity
 import com.example.dogdex.databinding.ActivityMainBinding
+import com.example.dogdex.doglist.DogListActivity
 import com.example.dogdex.model.User
 import com.example.dogdex.settings.SettingsActivity
 
@@ -20,10 +22,19 @@ class MainActivity : AppCompatActivity() {
         if(user == null){
             openLoginActivity()
             return
+        } else{
+            ApiServiceInterceptor.setSessionToken(user.autheticationToken)
         }
         binding.settingsFab.setOnClickListener{
             openSettingsActivity()
         }
+        binding.dogListFab.setOnClickListener{
+            openDogListActivity()
+        }
+    }
+
+    private fun openDogListActivity() {
+        startActivity(Intent(this, DogListActivity::class.java))
     }
 
     private fun openSettingsActivity() {
