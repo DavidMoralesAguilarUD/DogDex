@@ -5,6 +5,7 @@ import com.example.dogdex.api.DogsApi.retrofitService
 import com.example.dogdex.api.dto.DogDTOMapper
 import com.example.dogdex.api.makeNetworkCall
 import com.example.dogdex.api.ApiResponseStatus
+import com.example.dogdex.api.dto.AddDogToUserDTO
 
 class DogRepository {
     suspend fun downloadDogs(): ApiResponseStatus<List<Dog>> = makeNetworkCall {
@@ -12,5 +13,14 @@ class DogRepository {
         val dogDTOList = dogListApiResponse.data.dogs
         val dogDTOMapper = DogDTOMapper()
         dogDTOMapper.fromDogDTOlistToDogDomainList(dogDTOList)
+    }
+
+    suspend fun addDogToUser(dogId:String):ApiResponseStatus<Any> = makeNetworkCall {
+        val addDogToUserDTO = AddDogToUserDTO(dogId)
+        val defaultResponse  = retrofitService.addDogToUser(addDogToUserDTO)
+
+        if(!defaultResponse.isSuccess){
+            throw Exception(defaultResponse.message)
+        }
     }
 }
