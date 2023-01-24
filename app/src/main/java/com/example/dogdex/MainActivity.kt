@@ -9,6 +9,9 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.example.dogdex.api.ApiServiceInterceptor
 import com.example.dogdex.auth.LoginActivity
@@ -26,16 +29,17 @@ class MainActivity : AppCompatActivity() {
             if (isGranted) {
                 // Permission is granted. Continue the action or workflow in your
                 // app.
-                Log.d("TAG", "requestPermissionLauncher: Permiso Aceptado")
+                startCamera()
             } else {
                 Toast.makeText(this,"You need to accept camera permission to use camera",
                     Toast.LENGTH_SHORT).show()
             }
         }
 
+    private lateinit var binding:ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val user = User.getLoggedInUser(this)
@@ -62,8 +66,7 @@ class MainActivity : AppCompatActivity() {
                     Manifest.permission.CAMERA
 
                 ) == PackageManager.PERMISSION_GRANTED -> {
-                    Log.d("TAG", "requestCameraPermission: Permiso Aceptado")
-
+                    startCamera()
                 }
                 shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
                     AlertDialog.Builder(this)
@@ -89,8 +92,27 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         } else {
-
+            startCamera()
         }
+
+    }
+
+    private fun startCamera(){
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+
+        cameraProviderFuture.addListener({
+            val cameraProvider = cameraProviderFuture.get()
+
+            val preview = Preview.Builder().build()
+            preview.setSurfaceProvider(binding.cameraPreview.surfaceProvider)
+
+            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+            cameraProvider.bindToLifecycle(
+                this, cameraSelector,
+                        preview
+            )
+        }, ContextCompat.getMainExecutor(this))
 
     }
 
